@@ -1,0 +1,79 @@
+# =========================
+# Python
+# =========================
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+
+# Ambiente virtual
+venv/
+.env/
+.venv/
+
+# Variáveis de ambiente (API KEY!)
+.env
+
+# =========================
+# IDE / Editor
+# =========================
+.vscode/
+.idea/
+*.swp
+
+# =========================
+# Sistema operacional
+# =========================
+.DS_Store
+Thumbs.db
+
+# =========================
+# Dados (ENGENHARIA DE DADOS)
+# =========================
+
+# RAW (nunca subir)
+data/raw/
+
+# Processados
+data/processed/
+
+# Features
+data/features/
+
+# =========================
+# Modelos / IA
+# =========================
+models/
+*.pkl
+*.joblib
+*.h5
+
+# =========================
+# Logs
+# =========================
+logs/
+*.log
+
+# =========================
+# Notebooks (outputs pesados)
+# =========================
+.ipynb_checkpoints/
+
+# =========================
+# Cache / temporários
+# =========================
+.cache/
+tmp/
+temp/
+
+# =========================
+# Docker
+# =========================
+*.env.docker
+
+# =========================
+# Build / distribuição
+# =========================
+dist/
+build/
+*.egg-info/
