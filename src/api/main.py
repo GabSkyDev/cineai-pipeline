@@ -10,9 +10,11 @@ BASE_PATH = Path(__file__).resolve().parents[2]
 
 DATA_PATH = BASE_PATH / "data/processed/movies.parquet"
 TFIDF_PATH = BASE_PATH / "data/features/tfidf_matrix.joblib"
+VECTORIZER_PATH = BASE_PATH / "data/features/tfidf_vectorizer.joblib"
 
 df = pd.read_parquet(DATA_PATH)
 tfidf_matrix = joblib.load(TFIDF_PATH)
+vectorizers = joblib.load(VECTORIZER_PATH)
 
 df["title_lower"] = df["title"].str.lower()
 
@@ -21,5 +23,5 @@ df["title_lower"] = df["title"].str.lower()
 def recommend(movie: str, top_n: int = 5):
     return {
         "input": movie,
-        "recommendation": get_recommendations(movie, top_n, df, tfidf_matrix)
+        "recommendation": get_recommendations(movie, top_n, df, tfidf_matrix, vectorizers)
     }

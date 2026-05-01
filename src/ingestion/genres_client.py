@@ -10,16 +10,21 @@ from pathlib import Path
 env_path = Path(__file__).resolve().parents[2] / ".env"
 load_dotenv(env_path)
 
-API_KEY = os.getenv("API_KEY")
-BASE_URL = os.getenv("BASE_URL")
-
 setup_logger()
 logger = logging.getLogger(__name__)
 
+def _get_config():
+    api_key = os.getenv("API_KEY")
+    base_url = os.getenv("BASE_URL") or "https://api.themoviedb.org/3"
+    if not api_key:
+        raise RuntimeError("API_KEY não definido. Configure API_KEY no ambiente ou em um arquivo .env.")
+    return api_key, base_url
+
 def fetch_genres():
-    url = f"{BASE_URL}/genre/movie/list"
+    api_key, base_url = _get_config()
+    url = f"{base_url}/genre/movie/list"
     params = {
-        "api_key": API_KEY,
+        "api_key": api_key,
         "language": "en"
     }
 

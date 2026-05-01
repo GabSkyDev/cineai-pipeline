@@ -9,8 +9,8 @@ from src.utils.logger import setup_logger
 setup_logger()
 logger = logging.getLogger(__name__)
 
-RAW_PATH = Path(f"data/raw/movies_raw_{datetime.now().strftime("%Y-%m-%d")}.json")
-GENRE_PATH = Path(f"data/raw/genres_{datetime.now().strftime("%Y-%m-%d")}.json")
+RAW_PATH = Path(f"data/raw/movies_raw_{datetime.now().strftime('%Y-%m-%d')}.json")
+GENRE_PATH = Path(f"data/raw/genres_{datetime.now().strftime('%Y-%m-%d')}.json")
 PROCESSED_PATH = Path("data/processed/movies.parquet")
 
 def load_raw():
@@ -44,13 +44,24 @@ def process_movies(data, genre_map):
     df = df.dropna(subset=["title", "overview", "release_date"])
 
     df["genres"] = df["genre_ids"].apply(
-        lambda ids: [genre_map.get(genre_id, "Unknown") for genre_id in ids] 
+    lambda ids: [genre_map.get(genre_id, "") for genre_id in ids]
     )
 
+    df["genres_str"] = df["genres"].apply(
+    lambda x: " ".join([g.lower().replace(" ", "_") for g in x if g])
+    )
+
+    df["title_clean"] = df["title"].apply(clean_text)
     df["overview"] = df["overview"].apply(clean_text)
 
-    df["content"] = df["overview"] + " " + df["genres"].apply(lambda x: " ".join([g.lower() for g in x]) if isinstance(x, list) else "")
+    df = df[df["vote_average"] > 4]
+    df = df[df["overview"].str.len() > 50]
 
+    df["content"] = (
+        (df["title_clean"].fillna("") + " ") * 3 +
+        df["genres_str"].fillna("") + " " +
+        df["overview"]
+    )
     df = df.drop_duplicates(subset="id")
 
     df["release_date"] = pd.to_datetime(df["release_date"], errors="coerce")

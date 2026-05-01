@@ -11,18 +11,23 @@ from src.utils.logger import setup_logger
 env_path = Path(__file__).resolve().parents[2] / ".env"
 load_dotenv(env_path)
 
-API_KEY = os.getenv("API_KEY")
-BASE_URL = os.getenv("BASE_URL")
-
 OUTPUT_PATH = Path("data/raw/movies_raw.json")
 
 setup_logger()
 logger = logging.getLogger(__name__)
 
+def _get_config():
+    api_key = os.getenv("API_KEY")
+    base_url = os.getenv("BASE_URL") or "https://api.themoviedb.org/3"
+    if not api_key:
+        raise RuntimeError("API_KEY não definido. Configure API_KEY no ambiente ou em um arquivo .env.")
+    return api_key, base_url
+
 def fetch_movies(page: int):
-    url = f"{BASE_URL}/movie/popular"
+    api_key, base_url = _get_config()
+    url = f"{base_url}/movie/popular"
     params = {
-        "api_key": API_KEY,
+        "api_key": api_key,
         "language": "en-US",
         "page": page
     }
