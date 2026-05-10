@@ -160,11 +160,18 @@ Resposta:
 - TF‑IDF não entende semântica: pode haver recomendações por “palavra em comum” (ex.: títulos com o mesmo termo).
 - Quanto mais rico o dataset (cast, diretor, keywords, etc.), melhor a qualidade de recomendação.
 
-### Próximos passos (ideias)
+### Fluxograma da Pipeline
 
-- Enriquecer base com dados do endpoint de detalhes do TMDB (cast/diretor/keywords/tagline)
-- Adicionar modo “semantic search” com embeddings (ex.: `sentence-transformers`) e comparação com o baseline TF‑IDF
-- Cache e persistência de artifacts por versão/dia para demos mais rápidas
+<img width="3722" height="2022" alt="Fluxograma - Cine AI Pipeline" src="https://github.com/user-attachments/assets/3427ac7e-1be1-46ba-9156-1b7168a8bf25" />
+
+### Interface gráfica
+
+#### Página Principal
+<img width="1600" height="886" alt="WhatsApp Image 2026-05-01 at 15 18 02" src="https://github.com/user-attachments/assets/ec2ea3d3-73bd-4c3d-b646-7d57f43cce9a" />
+
+#### Exemplo de resultado
+<img width="1467" height="912" alt="WhatsApp Image 2026-05-01 at 15 22 42" src="https://github.com/user-attachments/assets/227b9ed4-a11a-44ba-9494-a59e27ea1c3a" />
+
 
 ### Conclusão
 
